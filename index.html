@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Cascades Infosec Systems</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Cascades Infosec Systems LLC: risk assessments, penetration testing, compliance readiness and incident response for small and mid-sized businesses.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: dark ridge-line hero band, then light content bands; one column on phones, two-up grids on desktop */
+:root {
+  --fir: #0f2a2e;        /* Fir Night: hero, footer, headings */
+  --glacier: #2b8a96;    /* Glacier Teal: primary accent, buttons */
+  --snow: #f4f8f8;       /* Snowfield: page background */
+  --granite: #56676a;    /* Granite: secondary text */
+  --amber: #d9962b;      /* Signal Amber: small highlights only */
+  --surface: #ffffff;
+  --line: #d6e1e2;
+  --fg: #142a2d;
+  --hero-fg: #e8f2f2;
+  --hero-muted: #9fbcbf;
+  --focus: #2b8a96;
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --snow: #0b1c1f; --surface: #12292d; --line: #24414a; --fg: #e3eeee;
+    --granite: #93abae; --glacier: #4fb3bf; --fir: #071417; --focus: #4fb3bf;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --snow: #0b1c1f; --surface: #12292d; --line: #24414a; --fg: #e3eeee;
+  --granite: #93abae; --glacier: #4fb3bf; --fir: #071417; --focus: #4fb3bf;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--snow); color: var(--fg); font-family: var(--body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); line-height: 1.1; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--glacier); }
+
+/* Header + hero */
+.hero { background: var(--fir); color: var(--hero-fg); position: relative; overflow: hidden; }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 22px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-name { font-family: var(--display); font-weight: 800; font-stretch: 112%; font-size: 18px; letter-spacing: .01em; }
+.brand-name small { display: block; font-family: var(--mono); font-weight: 400; font-size: 10px; letter-spacing: .2em; color: var(--hero-muted); }
+.nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; font-size: 15px; flex-wrap: wrap; }
+.nav ul a { text-decoration: none; color: var(--hero-muted); }
+.nav ul a:hover { color: var(--hero-fg); }
+.hero-body { padding-block: 56px 150px; max-width: 760px; position: relative; z-index: 1; display: grid; gap: 22px; }
+.hero h1 { font-size: clamp(36px, 6vw, 64px); font-weight: 800; font-stretch: 118%; letter-spacing: -.01em; }
+.hero h1 em { font-style: normal; color: #6fc7d1; }
+.hero p { font-size: 19px; color: var(--hero-muted); max-width: 58ch; }
+.hero .label { color: var(--amber); }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-block; font-family: var(--body); font-weight: 600; font-size: 16px; padding: 12px 22px; border-radius: 4px; text-decoration: none; border: 2px solid transparent; cursor: pointer; }
+.btn-primary { background: var(--glacier); color: #fff; }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-ghost { border-color: #3d5d62; color: var(--hero-fg); }
+.btn-ghost:hover { border-color: var(--hero-muted); }
+.ridge { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 140px; }
+
+/* Sections */
+section { padding-block: 80px; }
+.section-head { display: grid; gap: 12px; max-width: 640px; margin-bottom: 40px; }
+.section-head h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 750; font-stretch: 108%; }
+.section-head p { color: var(--granite); }
+
+.services { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.service { background: var(--surface); padding: 28px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.service .code { font-family: var(--mono); font-size: 12px; color: var(--granite); }
+.service h3 { font-size: 21px; font-weight: 700; font-stretch: 105%; }
+.service p { color: var(--granite); font-size: 16px; }
+
+.approach { background: var(--surface); border-block: 1px solid var(--line); }
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; list-style: none; margin: 0; padding: 0; counter-reset: s; }
+.steps li { display: grid; gap: 8px; border-top: 3px solid var(--glacier); padding-top: 16px; counter-increment: s; min-width: 0; }
+.steps li::before { content: "Phase " counter(s); font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--granite); }
+.steps h3 { font-size: 20px; font-weight: 700; }
+.steps p { color: var(--granite); font-size: 16px; }
+
+/* Contact */
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 56px; align-items: start; }
+.contact-info { display: grid; gap: 18px; }
+.contact-info p { color: var(--granite); }
+.facts { display: grid; gap: 10px; margin-top: 8px; }
+.facts div { display: grid; gap: 2px; }
+.facts dt { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--granite); }
+.facts dd { margin: 0; font-weight: 600; }
+form { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 28px; display: grid; gap: 18px; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+label { font-weight: 600; font-size: 15px; }
+label span { color: var(--granite); font-weight: 400; }
+input, select, textarea { font: inherit; font-size: 16px; color: var(--fg); background: var(--snow); border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; width: 100%; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: var(--focus); }
+textarea { min-height: 130px; resize: vertical; }
+.error { color: #c0392b; font-size: 14px; }
+.form-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.form-foot small { color: var(--granite); font-size: 14px; }
+.sent { border-left: 4px solid var(--glacier); padding: 12px 16px; background: var(--snow); }
+
+/* Palette note */
+.palette { border-top: 1px dashed var(--line); }
+.swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+.swatch { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--surface); }
+.chip { height: 80px; }
+.swatch div:last-child { padding: 12px 14px; display: grid; gap: 2px; }
+.swatch b { font-size: 15px; }
+.swatch code { font-family: var(--mono); font-size: 13px; color: var(--granite); }
+.swatch span { font-size: 14px; color: var(--granite); }
+
+footer { background: var(--fir); color: var(--hero-muted); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding-block: 28px; }
+
+@media (max-width: 760px) {
+  .contact-grid, .row { grid-template-columns: 1fr; }
+  .contact-grid { gap: 36px; }
+  section { padding-block: 56px; }
+  .hero-body { padding-block: 32px 120px; }
+  .services { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ridge .node { animation: pulse 3.2s ease-in-out infinite; }
+  .ridge .node:nth-of-type(2n) { animation-delay: 1.1s; }
+  @keyframes pulse { 50% { opacity: .35; } }
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="#top" id="top">
+        <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><path d="M2 28 L12 12 L17 19 L22 8 L32 28 Z" fill="none" stroke="#6fc7d1" stroke-width="2.4" stroke-linejoin="round"/><circle cx="22" cy="8" r="3" fill="#d9962b"/></svg>
+        <span class="brand-name">CASCADES INFOSEC<small>SYSTEMS LLC</small></span>
+      </a>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="hero-body">
+      <span class="label">Cybersecurity for growing businesses</span>
+      <h1>Find the weak points <em>before attackers do.</em></h1>
+      <p>Cascades Infosec Systems helps small and mid-sized organizations assess risk, harden their networks, and meet compliance requirements, with clear reports your whole team can act on.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="#contact">Request a consultation</a>
+        <a class="btn btn-ghost" href="#services">See our services</a>
+      </div>
+    </div>
+  </div>
+  <svg class="ridge" viewBox="0 0 1200 140" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 140 L0 110 L120 70 L210 95 L330 30 L430 80 L520 55 L640 100 L760 20 L870 75 L960 50 L1080 90 L1200 60 L1200 140 Z" fill="#163a40"/>
+    <polyline points="0,110 120,70 210,95 330,30 430,80 520,55 640,100 760,20 870,75 960,50 1080,90 1200,60" fill="none" stroke="#2b8a96" stroke-width="1.5"/>
+    <circle class="node" cx="330" cy="30" r="4" fill="#6fc7d1"/>
+    <circle class="node" cx="520" cy="55" r="4" fill="#6fc7d1"/>
+    <circle class="node" cx="760" cy="20" r="5" fill="#d9962b"/>
+    <circle class="node" cx="960" cy="50" r="4" fill="#6fc7d1"/>
+  </svg>
+</header>
+
+<main>
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Services</span>
+        <h2>Security work sized for your business</h2>
+        <p>Pick a single engagement or combine them into an ongoing program.</p>
+      </div>
+      <div class="services">
+        <article class="service"><span class="code">SVC-01</span><h3>Risk assessments</h3><p>A full review of your systems, policies and vendors, ranked by business impact so you know what to fix first.</p></article>
+        <article class="service"><span class="code">SVC-02</span><h3>Penetration testing</h3><p>Controlled attacks on your network, web apps and cloud accounts to show exactly how a breach could happen.</p></article>
+        <article class="service"><span class="code">SVC-03</span><h3>Compliance readiness</h3><p>Gap analysis and documentation support for frameworks such as SOC 2, HIPAA, PCI DSS and NIST CSF.</p></article>
+        <article class="service"><span class="code">SVC-04</span><h3>Network hardening</h3><p>Firewall, endpoint and identity configuration reviews, followed by hands-on remediation.</p></article>
+        <article class="service"><span class="code">SVC-05</span><h3>Incident response</h3><p>Help containing an active incident, finding the root cause, and recovering safely.</p></article>
+        <article class="service"><span class="code">SVC-06</span><h3>Security awareness training</h3><p>Practical sessions and phishing simulations that teach staff to spot and report threats.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach" class="approach">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="label">Approach</span>
+        <h2>How an engagement works</h2>
+      </div>
+      <ol class="steps">
+        <li><h3>Discover</h3><p>We learn how your business runs and map the systems and data that matter most.</p></li>
+        <li><h3>Assess</h3><p>We test controls and configurations against real-world threats and your compliance needs.</p></li>
+        <li><h3>Report</h3><p>You get a plain-language report with prioritized findings and a remediation plan.</p></li>
+        <li><h3>Strengthen</h3><p>We help fix what we found, then retest to confirm the gaps are closed.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <span class="label">Contact</span>
+        <h2 style="font-size: clamp(28px, 4vw, 40px); font-weight: 750; font-stretch: 108%;">Talk to a security consultant</h2>
+        <p>Tell us a little about your organization and what you need. We reply within one business day.</p>
+        <dl class="facts">
+          <div><dt>Email</dt><dd>info@cascadesinfosec.com</dd></div>
+          <div><dt>Hours</dt><dd>Mon to Fri, 8am to 6pm</dd></div>
+        </dl>
+      </div>
+      <form id="contact-form" action="https://formsubmit.co/info@cascadesinfosec.com" method="POST">
+        <input type="hidden" name="_subject" value="New enquiry from cascadesinfosec.com">
+        <input type="hidden" name="_template" value="table">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="row">
+          <div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" required></div>
+          <div class="field"><label for="email">Work email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="company">Company <span>(optional)</span></label><input id="company" name="company" autocomplete="organization"></div>
+          <div class="field"><label for="topic">I'm interested in</label>
+            <select id="topic" name="topic">
+              <option>Risk assessment</option><option>Penetration testing</option><option>Compliance readiness</option>
+              <option>Network hardening</option><option>Incident response</option><option>Security training</option><option>Something else</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label for="message">How can we help?</label><textarea id="message" name="message" required></textarea></div>
+        <div class="form-foot">
+          <small>We reply within one business day.</small>
+          <button class="btn btn-primary" type="submit">Send message</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Cascades Infosec Systems LLC</span>
+    <span>Security assessments · Compliance · Incident response</span>
+  </div>
+</footer>
+</body>
+</html>
