@@ -92,7 +92,7 @@
         <input type="hidden" name="access_key" value="b9358cd8-d676-4ea3-9186-555f17084dc9">
         <input type="hidden" name="subject" value="New enquiry from cascadesinfosec.com">
         <input type="hidden" name="from_name" value="Cascades Infosec website">
-        <input type="hidden" name="redirect" value="https://cascadesinfosec.com/thanks.html">
+        <input type="hidden" name="redirect" id="form-redirect" value="https://cascadesinfosec.com/thanks.html">
         <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="row">
           <div class="field"><label for="name">Full name</label><input id="name" name="name" autocomplete="name" required></div>
@@ -125,5 +125,10 @@
     <span>Security assessments · Compliance · Incident response</span>
   </div>
 </footer>
+
+<script>
+// Send visitors to the thank-you page on whatever address they used (http or https, custom domain or github.io)
+document.getElementById('form-redirect').value = new URL('thanks.html', location.href).href;
+</script>
 </body>
 </html>
