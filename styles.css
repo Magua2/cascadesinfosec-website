@@ -137,3 +137,26 @@ footer a { color: var(--hero-fg); }
 .consent { font-size: 14px; color: var(--granite); }
 .consent a { color: var(--glacier); }
 
+
+/* Mimi chat widget */
+.mimi { position: fixed; z-index: 50; right: max(16px, env(safe-area-inset-right, 0px)); bottom: max(16px, env(safe-area-inset-bottom, 0px)); font-family: var(--body); display: flex; flex-direction: column-reverse; align-items: flex-end; gap: 12px; }
+.mimi-launch { display: inline-flex; align-items: center; gap: 10px; background: var(--fir); color: #e8f2f2; border: 1px solid #2b5056; border-radius: 999px; padding: 12px 20px; font: 600 15px var(--body); cursor: pointer; box-shadow: 0 6px 20px rgba(7, 20, 23, .25); }
+.mimi-launch:hover { background: #163a40; }
+.mimi-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--amber); }
+.mimi-panel { padding: 0; width: min(380px, calc(100vw - 32px)); height: min(540px, calc(100vh - 120px)); background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 12px 40px rgba(7, 20, 23, .25); display: flex; flex-direction: column; overflow: hidden; }
+.mimi-panel[hidden] { display: none; }
+.mimi-head { background: var(--fir); color: #e8f2f2; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; }
+.mimi-head strong { font-family: var(--display); font-stretch: 110%; font-size: 17px; display: block; }
+.mimi-head span { font-size: 13px; color: #9fbcbf; }
+.mimi-close { background: none; border: 0; color: #e8f2f2; font-size: 26px; line-height: 1; cursor: pointer; padding: 4px 8px; }
+.mimi-log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--snow); }
+.mimi-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 15px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+.mimi-assistant { align-self: flex-start; background: var(--surface); border: 1px solid var(--line); color: var(--fg); border-bottom-left-radius: 4px; }
+.mimi-user { align-self: flex-end; background: #2b8a96; color: #fff; border-bottom-right-radius: 4px; }
+.mimi-typing { color: var(--granite); font-style: italic; }
+.mimi-form { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); background: var(--surface); }
+.mimi-form textarea { flex: 1; min-width: 0; resize: none; min-height: 42px; max-height: 120px; }
+.mimi-send { background: var(--glacier); color: #fff; border: 0; border-radius: 4px; padding: 0 16px; font: 600 15px var(--body); cursor: pointer; }
+.mimi-send:disabled { opacity: .6; cursor: default; }
+.mimi-note { margin: 0; padding: 0 12px 10px; font-size: 12px; color: var(--granite); background: var(--surface); }
+.mimi-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
