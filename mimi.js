@@ -88,6 +88,12 @@
     })
       .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
       .then(function (r) {
+        if (r.data && r.data.error === "limit") {
+          history.pop();
+          typing.classList.remove("mimi-typing");
+          typing.textContent = "You've reached the chat limit for now. Please try again in an hour, or reach us through the contact form or info@cascadesinfosec.com.";
+          return;
+        }
         if (!r.ok || !r.data.reply) throw new Error("bad response");
         typing.classList.remove("mimi-typing");
         typing.textContent = r.data.reply;

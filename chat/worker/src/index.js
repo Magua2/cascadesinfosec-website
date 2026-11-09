@@ -11,6 +11,35 @@ const ALLOWED_ORIGINS = [
 const MAX_MESSAGES = 20;
 const MAX_MESSAGE_CHARS = 1500;
 
+// Spending guard: each visitor (by IP address) may send PER_VISITOR_LIMIT messages per
+// hour, and all visitors together TOTAL_LIMIT per hour. Counts are kept in memory, so
+// they are best effort (Cloudflare may run more than one copy of the worker); the
+// prepaid credit balance in the Claude Console remains the hard cap.
+const WINDOW_MS = 60 * 60 * 1000;
+const PER_VISITOR_LIMIT = 20;
+const TOTAL_LIMIT = 200;
+const visitorHits = new Map();
+let totalHits = [];
+
+function allowRequest(ip, now) {
+  const cutoff = now - WINDOW_MS;
+  totalHits = totalHits.filter((t) => t > cutoff);
+  const hits = (visitorHits.get(ip) || []).filter((t) => t > cutoff);
+  if (hits.length >= PER_VISITOR_LIMIT || totalHits.length >= TOTAL_LIMIT) {
+    visitorHits.set(ip, hits);
+    return false;
+  }
+  hits.push(now);
+  totalHits.push(now);
+  visitorHits.set(ip, hits);
+  if (visitorHits.size > 5000) {
+    for (const [key, times] of visitorHits) {
+      if (!times.some((t) => t > cutoff)) visitorHits.delete(key);
+    }
+  }
+  return true;
+}
+
 const SYSTEM_PROMPT = `You are Mimi, the friendly website assistant for Cascades Infosec Systems LLC, a cybersecurity consulting firm for small and mid-sized organizations.
 
 Your job is to answer visitors' questions about the company and its services, help them work out which service fits their situation, and guide them to get in touch.
@@ -97,12 +126,17 @@ export default {
       return json({ error: "Invalid request" }, 400, origin);
     }
 
+    const ip = request.headers.get("CF-Connecting-IP") || "unknown";
+    if (!allowRequest(ip, Date.now())) {
+      return json({ error: "limit" }, 429, origin);
+    }
+
     const client = new Anthropic({ apiKey: env.ANTHROPIC_API_KEY });
 
     try {
       const response = await client.beta.messages.create({
         model: "claude-opus-5-5",
-        max_tokens: 2048,
+        max_tokens: 1024,
         output_config: { effort: "low" },
         system: [{ type: "text", text: SYSTEM_PROMPT, cache_control: { type: "ephemeral" } }],
         messages,

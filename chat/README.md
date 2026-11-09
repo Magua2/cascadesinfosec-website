@@ -9,8 +9,8 @@ Mimi is the website chat assistant. It has two parts:
 
 ## Deploying the worker (Cloudflare dashboard)
 
-1. Create a Claude API key at https://platform.claude.com (Settings > API keys) and set a
-   monthly spend limit under Settings > Limits.
+1. Create a Claude API key at https://platform.claude.com (Settings > API keys). Under
+   Billing, keep auto-reload off so the prepaid balance is the hard spending cap.
 2. In Cloudflare, go to Workers & Pages > Create > Create Worker, name it `mimi-chat`,
    and deploy the starter.
 3. Click Edit code, replace everything with the contents of `chat/worker/dist/worker.js`,
@@ -31,3 +31,10 @@ npx esbuild src/index.js --bundle --format=esm --platform=browser --target=es202
 ```
 
 and paste the new `dist/worker.js` into the Cloudflare editor.
+
+## Spending guard
+
+The worker allows each visitor 20 messages per hour and all visitors together 200 per
+hour (`PER_VISITOR_LIMIT` and `TOTAL_LIMIT` in `src/index.js`). Past that it returns a
+429 and the chat asks the visitor to try later or use the contact form. Counts live in
+memory, so they are best effort; the prepaid Claude Console balance is the hard cap.
